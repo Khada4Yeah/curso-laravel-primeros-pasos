@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Str;
-
 use App\Models\Category;
 use App\Models\Post;
 use App\Http\Requests\Post\StoreRequest;
@@ -54,7 +52,9 @@ class PostController extends Controller
         // $data["slug"] = Str::slug($data["title"]);
 
         Post::create($request->validated());
-        return redirect()->route("post.index");
+        return redirect()
+            ->route("post.index")
+            ->with("status", "Registro Creado");
     }
 
     /**
@@ -118,6 +118,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route("post.index");
+        return redirect()
+            ->route("post.index")
+            ->with("status", "Registro Eliminado");
     }
 }
