@@ -1,8 +1,9 @@
 @extends("dashboard.layout")
 
 @section("content")
-<a href="{{ route('post.create') }}">Crear</a>
-<table>
+<a class="btn btn-success my-3" href="{{ route('post.create') }}">Crear</a>
+
+<table class="table mb-3">
     <thead>
         <tr>
             <th>Titulo</th>
@@ -19,12 +20,12 @@
             <td>{{ $p->category->title }}</td>
             <td>{{ $p->posted }}</td>
             <td>
-                <a href="{{ route('post.edit', $p) }}">Editar</a>
-                <a href="{{ route('post.show', $p) }}">Ver</a>
+                <a class="btn btn-primary mt-2" href="{{ route('post.edit', $p) }}">Editar</a>
+                <a class="btn btn-primary mt-2" href="{{ route('post.show', $p) }}">Ver</a>
                 <form action="{{ route('post.destroy', $p) }}" method="POST">
                     @method("DELETE")
                     @csrf
-                    <button type="submit">Eliminar</button>
+                    <button class="btn btn-danger" type="submit">Eliminar</button>
                 </form>
             </td>
         </tr>
@@ -32,6 +33,6 @@
     </tbody>
 </table>
 
-{{ $posts->links('pagination::bootstrap-4') }}
+{{ $posts->links() }}
 
 @endsection

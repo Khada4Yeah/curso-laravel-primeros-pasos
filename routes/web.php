@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\PostController;
-use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +19,30 @@ Route::get("/", function () {
     return view("welcome");
 });
 
-Route::resource("post", PostController::class);
-Route::resource("category", CategoryController::class);
+// Route::get("/dashboard", function () {
+//     return view("dashboard");
+// })
+//     ->middleware(["auth"])
+//     ->name("dashboard");
+
+require __DIR__ . "/auth.php";
+
+//Usar middleware especifico
+// Route::middleware([TestMiddleware::class])->group(function () {
+//     Route::get("/tests/{id?}/{name}", function ($id = 10, $name = "pepe") {
+//         echo $id;
+//         echo $name;
+//     });
+// });
+
+//Darle un prefijo a las rutas
+Route::group(["prefix" => "dashboard", "middleware" => "auth"], function () {
+    Route::get("/", function () {
+        return view("dashboard");
+    })->name("dashboard");
+    Route::resource("post", PostController::class);
+    Route::resource("category", CategoryController::class);
+});
+
+// Route::resource("post", PostController::class);
+// Route::resource("category", CategoryController::class);
