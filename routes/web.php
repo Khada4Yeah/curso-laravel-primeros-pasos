@@ -36,13 +36,16 @@ require __DIR__ . "/auth.php";
 // });
 
 //Darle un prefijo a las rutas
-Route::group(["prefix" => "dashboard", "middleware" => "auth"], function () {
-    Route::get("/", function () {
-        return view("dashboard");
-    })->name("dashboard");
-    Route::resource("post", PostController::class);
-    Route::resource("category", CategoryController::class);
-});
+Route::group(
+    ["prefix" => "dashboard", "middleware" => ["auth", "admin"]],
+    function () {
+        Route::get("/", function () {
+            return view("dashboard");
+        })->name("dashboard");
+        Route::resource("post", PostController::class);
+        Route::resource("category", CategoryController::class);
+    }
+);
 
 // Route::resource("post", PostController::class);
 // Route::resource("category", CategoryController::class);
